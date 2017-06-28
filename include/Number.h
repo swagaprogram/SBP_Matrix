@@ -6,6 +6,7 @@
 class Number    
 {
 public:
+                    Number();
                     Number(char *numStr);
                     Number(int numerator, int denominator);
                     Number(double number);
@@ -17,8 +18,15 @@ public:
     friend Number   operator-(const Number firstNum, const Number secondNum); 
     friend Number   operator*(const Number firstNum, const Number secondNum); 
     friend Number   operator/(const Number firstNum, const Number secondNum); 
+    
     friend bool     operator==(const Number firstNum, const Number secondNum);
- 
+    friend bool     operator!=(const Number firstNum, const Number secondNum);
+    
+    friend bool     operator>(const Number firstNum, const Number secondNum);
+    friend bool     operator>=(const Number firstNum, const Number secondNum);
+    friend bool     operator<(const Number firstNum, const Number secondNum);
+    friend bool     operator<=(const Number firstNum, const Number secondNum);
+
 private:
     bool            Ok() const;
     bool            checkInputStr(char *numStr);
