@@ -2,15 +2,20 @@
 
 
 Number::Number(char *numStr) :
-    numerator_      (std::numeric_limits<double>::quiet_NaN()),
-    denominator_    (std::numeric_limits<double>::quiet_NaN())
+    numerator_      (0),
+    denominator_    (1)
 {
-    if(checkInputStr(numStr) == false) {
-        printf("Error with input str");
-    }
-    else { 
-        
-    }
+   // if(checkInputStr(numStr) == false) {
+    //    printf("Error with input str");
+   // }
+  //  else { 
+        size_t counter = 0;    
+        Number num = Counting(numStr, &counter);
+        numerator_ = num.numerator_;
+        denominator_ = num.denominator_;
+        makeNumberSimple();
+//ok
+//    }
 }
 
 Number::Number(int numerator, int denominator) : 
@@ -74,43 +79,44 @@ int nok(int a, int b) {
 int nod(int a, int b) {
     return b ? nod (b, a % b) : a;
 }
-
+/*
 Number* sumNumbers(Number* firstNum, Number* secondNum) {
-    int NOK = nok(firstNum->denominator_, secondNum->denominator_);
-    int a = firstNum->numerator_ * (NOK / firstNum-> denominator_);
-    int b = secondNum->numerator_ * (NOK / secondNum->denominator_);
+    int NOK = nok(firstNum.denominator_, secondNum->denominator_);
+    int a = firstNum.numerator_ * (NOK / firstNum-> denominator_);
+    int b = secondNum.numerator_ * (NOK / secondNum->denominator_);
     Number* newNumber = new Number(a + b, NOK);
     return newNumber;
 }
 
 Number* subNumbers(Number* firstNum, Number* secondNum) {
-    int NOK = nok(firstNum->denominator_, secondNum->denominator_);
-    int a = firstNum->numerator_ * (NOK / firstNum-> denominator_);
-    int b = secondNum->numerator_ * (NOK / secondNum->denominator_);
+    int NOK = nok(firstNum.denominator_, secondNum->denominator_);
+    int a = firstNum.numerator_ * (NOK / firstNum-> denominator_);
+    int b = secondNum.numerator_ * (NOK / secondNum->denominator_);
     Number* newNumber = new Number(a - b, NOK);
     return newNumber;
 }
 
 Number* mulNumbers(Number* firstNum, Number* secondNum) {
-    int newNumerator = firstNum->numerator_ * secondNum->numerator_;
-    int newDenominator = firstNum->denominator_ * secondNum->denominator_;
+    int newNumerator = firstNum.numerator_ * secondNum->numerator_;
+    int newDenominator = firstNum.denominator_ * secondNum->denominator_;
     Number* newNumber = new Number(newNumerator, newDenominator);
     return newNumber;
 }
 
 Number* divNumbers(Number* firstNum, Number* secondNum) {
-    int newNumerator = firstNum->numerator_ * secondNum->denominator_;
-    int newDenominator = firstNum->denominator_ * secondNum->numerator_;
+    int newNumerator = firstNum.numerator_ * secondNum->denominator_;
+    int newDenominator = firstNum.denominator_ * secondNum->numerator_;
     Number* newNumber = new Number(newNumerator, newDenominator);
     return newNumber;
 }
 
 bool checkNumbersEqual(Number* firstNum, Number* secondNum) {
-    if((firstNum->numerator_ == secondNum->numerator_) && 
-        firstNum->denominator_ == secondNum->denominator_) 
+    if((firstNum.numerator_ == secondNum->numerator_) && 
+        firstNum.denominator_ == secondNum->denominator_) 
         return true;
     else return false;
 }
+*/
 
 Number operator+(const Number firstNum, const Number secondNum) {
     int NOK = nok(firstNum.denominator_, secondNum.denominator_);
@@ -120,3 +126,31 @@ Number operator+(const Number firstNum, const Number secondNum) {
     return newNumber;
 }
 
+Number operator-(const Number firstNum, const Number secondNum) {
+    int NOK = nok(firstNum.denominator_, secondNum.denominator_);
+    int a = firstNum.numerator_ * (NOK / firstNum.denominator_);
+    int b = secondNum.numerator_ * (NOK / secondNum.denominator_);
+    Number newNumber(a - b, NOK);
+    return newNumber;
+}
+
+Number operator*(const Number firstNum, const Number secondNum) {
+    int newNumerator = firstNum.numerator_ * secondNum.numerator_;
+    int newDenominator = firstNum.denominator_ * secondNum.denominator_;
+    Number newNumber(newNumerator, newDenominator);
+    return newNumber;
+}
+
+Number operator/(const Number firstNum, const Number secondNum) {
+    int newNumerator = firstNum.numerator_ * secondNum.denominator_;
+    int newDenominator = firstNum.denominator_ * secondNum.numerator_;
+    Number newNumber(newNumerator, newDenominator);
+    return newNumber;
+}
+
+bool operator==(const Number firstNum, const Number secondNum) {
+     if((firstNum.numerator_ == secondNum.numerator_) && 
+        firstNum.denominator_ == secondNum.denominator_) 
+        return true;
+    else return false;
+}
