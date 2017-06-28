@@ -1,3 +1,6 @@
+#ifndef NUMBER_H_INCLUDED
+#define NUMBER_H_INCLUDED
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <cmath>
@@ -17,8 +20,14 @@ public:
     friend Number   operator+(const Number firstNum, const Number secondNum); 
     friend Number   operator-(const Number firstNum, const Number secondNum); 
     friend Number   operator*(const Number firstNum, const Number secondNum); 
-    friend Number   operator/(const Number firstNum, const Number secondNum); 
-    
+    friend Number   operator/(const Number firstNum, const Number secondNum);
+           
+           Number&  operator=(const Number& copyNum) {
+                    this->numerator_ = copyNum.numerator_;
+                    this->denominator_ = copyNum.denominator_;
+                    return *this;
+                    }
+
     friend bool     operator==(const Number firstNum, const Number secondNum);
     friend bool     operator!=(const Number firstNum, const Number secondNum);
     
@@ -48,12 +57,4 @@ private:
     int             nok(int a, int b);
     int             nod(int a, int b);
 
-
-
-
-
-Number*     sumNumbers(Number* firstNum, Number* secondNum);
-Number*     subNumbers(Number* firstNum, Number* secondNum);
-Number*     mulNumbers(Number* firstNum, Number* secondNum);
-Number*     divNumbers(Number* firstNum, Number* secondNum);
-bool        checkNumbersEqual(Number* firstNum, Number* secondNum);
+#endif
