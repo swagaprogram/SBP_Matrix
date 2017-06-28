@@ -27,9 +27,17 @@ Number::Number(int numerator, int denominator) :
     denominator_    (denominator)
 {        
     makeNumberSimple();
-    if (!Ok()) {
-        printf("Error in Number(int numerator, int denominator)");
+   /* try {
+        if(Ok()) {}
+        else {
+            throw "denominator = 0, div by zero\n";
+        }
     }
+    catch(char *msg) {
+        printf(msg);
+        Number();
+    }
+    */
 }
 
 Number::Number(double number) :
@@ -37,9 +45,16 @@ Number::Number(double number) :
     denominator_    (10000)
 { 
     makeNumberSimple();
-    if (!Ok()) {
-        printf("Error in Number(double number)");
-    }   
+/*    try {
+        if(Ok()) {}
+        else {
+            throw "denominator = 0, div by zero\n";
+        }
+    }
+    catch(char *msg) {
+        printf(msg);
+    }
+    */
 }
 
 Number::~Number() {
@@ -73,7 +88,8 @@ void Number::makeNumberSimple() {
 }
 
 bool Number::Ok() const {
-    return true;
+    if(denominator_ == 0) return false;
+    else return true;
 }
 
 int nok(int a, int b) {
