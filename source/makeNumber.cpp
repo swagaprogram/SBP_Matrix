@@ -1,4 +1,4 @@
-#include "Number.h"                                           
+#include "./../include/Number.h"                                           
 
 Number Number::Counting(char *str, size_t *counter) {
     Number val = getSubAdd(str, counter);
