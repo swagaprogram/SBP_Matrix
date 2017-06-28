@@ -1,5 +1,6 @@
 #pragma once
-
+#include "Number.h"
+#include <iostream>
 template<class T> class Matrix;
 template <typename T>
 
@@ -41,9 +42,18 @@ public:
 			}
 		}
 	}
-
+	
 	void setElement(unsigned int row, unsigned int column, T key) {
 		Array_[row][column] = key;
+	}
+
+	void print() {
+		for (unsigned int i = 0; i < rows_; ++i) {
+			for (unsigned int j = 0; j < columns_; ++j) {
+				std::cout << Array_[i][j] << " ";
+			}
+			std::cout << std::endl;
+		}
 	}
 
 };
