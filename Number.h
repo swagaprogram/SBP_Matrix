@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits>
+#include <cmath>
 
 class Number    
 {
@@ -10,23 +11,21 @@ public:
                 Number(double number);
                 ~Number();
 
-    bool        checkInputStr(char *numStr);
-        
     void        printNumber();
+
     void        makeNumberSimple();
-
+    int         numerator_;
+    int         denominator_; 
+private:
     bool        Ok() const;
-
-    double      numerator_;
-    double      denominator_; 
+    bool        checkInputStr(char *numStr);
 };
 
-class NumberOperations
-{
-public:
-    Number*     sumNumbers(Number* firstNum, Number* secondNum);
-    Number*     subNumbers(Number* firstNum, Number* secondNum);
-    Number*     mulNumbers(Number* firstNum, Number* secondNum);
-    Number*     divNumbers(Number* firstNum, Number* secondNum);
-    bool        checkNumbersEqual(Number* firstNum, Number* secondNum); 
-};
+Number*     sumNumbers(Number* firstNum, Number* secondNum);
+Number*     subNumbers(Number* firstNum, Number* secondNum);
+Number*     mulNumbers(Number* firstNum, Number* secondNum);
+Number*     divNumbers(Number* firstNum, Number* secondNum);
+bool        checkNumbersEqual(Number* firstNum, Number* secondNum);
+int         nok(int a, int b);
+int         nod(int a, int b);
+

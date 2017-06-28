@@ -9,7 +9,7 @@ Number::Number(char *numStr) :
         printf("Error with input str");
     }
     else { 
-
+        
     }
 }
 
@@ -24,13 +24,9 @@ Number::Number(int numerator, int denominator) :
 }
 
 Number::Number(double number) :
-    numerator_      (number),
-    denominator_    (1)
-{
-    while ((numerator_%1) == 0) {
-        numerator_ *= 10;
-        denominator_ *= 10;
-    }
+    numerator_      (int(number*10000)),
+    denominator_    (10000)
+{ 
     makeNumberSimple();
     if (!Ok()) {
         printf("Error in Number(double number)");
@@ -62,38 +58,65 @@ void Number::printNumber() {
 }
 
 void Number::makeNumberSimple() {
-
+    int NOD = nod(numerator_, denominator_);
+    numerator_ /= NOD;
+    denominator_ /= NOD;
 }
 
 bool Number::Ok() const {
-
+    return true;
 }
 
-Number* NumberOperations::sumNumbers(Number* firstNum, Number* secondNum) {
-    
+int nok(int a, int b) {
+    return fabs(a * b) / nod(a, b);
 }
 
-Number* NumberOperations::subNumbers(Number* firstNum, Number* secondNum) {
-
+int nod(int a, int b) {
+    return b ? nod (b, a % b) : a;
 }
 
-Number* NumberOperations::mulNumbers(Number* firstNum, Number* secondNum) {
-    double newNumerator = firstNum->numerator_ * secondNum->numerator_;
-    double newDenominator = firstNum->denominator_ * secondNum->denominator_;
+Number* sumNumbers(Number* firstNum, Number* secondNum) {
+    int NOK = nok(firstNum->denominator_, secondNum->denominator_);
+    int a = firstNum->numerator_ * (NOK / firstNum-> denominator_);
+    int b = secondNum->numerator_ * (NOK / secondNum->denominator_);
+    Number* newNumber = new Number(a + b, NOK);
+    return newNumber;
+}
+
+Number* subNumbers(Number* firstNum, Number* secondNum) {
+    int NOK = nok(firstNum->denominator_, secondNum->denominator_);
+    int a = firstNum->numerator_ * (NOK / firstNum-> denominator_);
+    int b = secondNum->numerator_ * (NOK / secondNum->denominator_);
+    Number* newNumber = new Number(a - b, NOK);
+    return newNumber;
+}
+
+Number* mulNumbers(Number* firstNum, Number* secondNum) {
+    int newNumerator = firstNum->numerator_ * secondNum->numerator_;
+    int newDenominator = firstNum->denominator_ * secondNum->denominator_;
     Number* newNumber = new Number(newNumerator, newDenominator);
     return newNumber;
 }
 
-Number* NumberOperations::divNumbers(Number* firstNum, Number* secondNum) {
-    double newNumerator = firstNum->numerator_ * secondNum->denominator_;
-    double newDenominator = firstNum->denominator_ * secondNum->numerator_;
+Number* divNumbers(Number* firstNum, Number* secondNum) {
+    int newNumerator = firstNum->numerator_ * secondNum->denominator_;
+    int newDenominator = firstNum->denominator_ * secondNum->numerator_;
     Number* newNumber = new Number(newNumerator, newDenominator);
     return newNumber;
 }
 
-bool NumberOperations::checkNumbersEqual(Number* firstNum, Number* secondNum) {
+bool checkNumbersEqual(Number* firstNum, Number* secondNum) {
     if((firstNum->numerator_ == secondNum->numerator_) && 
         firstNum->denominator_ == secondNum->denominator_) 
         return true;
     else return false;
-}    
+}
+
+Number operator+(const Number firstNum, const Number secondNum) {
+    int NOK = nok(firstNum.denominator_, secondNum.denominator_);
+    int a = firstNum.numerator_ * (NOK / firstNum.denominator_);
+    int b = secondNum.numerator_ * (NOK / secondNum.denominator_);
+    Number newNumber(a - b, NOK);
+    return newNumber;
+}
+
