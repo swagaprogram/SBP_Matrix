@@ -27,6 +27,12 @@ public:
                     this->denominator_ = copyNum.denominator_;
                     return *this;
                     }
+           Number&  operator=(const int num) {
+                    this->numerator_ = num;
+                    this->denominator_ = 1;
+                    return *this;
+                    }
+
 
     friend bool     operator==(const Number firstNum, const Number secondNum);
     friend bool     operator!=(const Number firstNum, const Number secondNum);
