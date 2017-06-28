@@ -1,5 +1,18 @@
 #include "./../include/Number.h" 
 
+#define OK();                                           \
+     try {                                              \
+        if(Ok()) {}                                     \
+        else {                                          \
+            throw 1;                                    \
+        }                                               \
+    }                                                   \
+    catch(int i) {                                      \
+        printf("denominator = 0, div by zero\n");       \
+        Number();                                       \
+    }
+   
+
 Number::Number() :
     numerator_      (0),
     denominator_    (1)
@@ -18,8 +31,7 @@ Number::Number(char *numStr) :
         numerator_ = num.numerator_;
         denominator_ = num.denominator_;
         makeNumberSimple();
-//ok
-//    }
+    OK();
 }
 
 Number::Number(int numerator, int denominator) : 
@@ -27,17 +39,7 @@ Number::Number(int numerator, int denominator) :
     denominator_    (denominator)
 {        
     makeNumberSimple();
-   /* try {
-        if(Ok()) {}
-        else {
-            throw "denominator = 0, div by zero\n";
-        }
-    }
-    catch(char *msg) {
-        printf(msg);
-        Number();
-    }
-    */
+    OK();    
 }
 
 Number::Number(double number) :
@@ -45,16 +47,7 @@ Number::Number(double number) :
     denominator_    (10000)
 { 
     makeNumberSimple();
-/*    try {
-        if(Ok()) {}
-        else {
-            throw "denominator = 0, div by zero\n";
-        }
-    }
-    catch(char *msg) {
-        printf(msg);
-    }
-    */
+    OK(); 
 }
 
 Number::~Number() {
