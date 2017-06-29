@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <cmath>
 #include <assert.h>
+#include <iostream>
 
 class Number    
 {
@@ -13,26 +14,25 @@ public:
                     Number(char *numStr);
                     Number(int numerator, int denominator);
                     Number(double number);
+                    Number(int number);
                     ~Number();
 
-    void            printNumber();
-    
     friend Number   operator+(const Number firstNum, const Number secondNum); 
     friend Number   operator-(const Number firstNum, const Number secondNum); 
     friend Number   operator*(const Number firstNum, const Number secondNum); 
     friend Number   operator/(const Number firstNum, const Number secondNum);
            
            Number&  operator=(const Number& copyNum) {
-                    this->numerator_ = copyNum.numerator_;
-                    this->denominator_ = copyNum.denominator_;
-                    return *this;
+                        this->numerator_ = copyNum.numerator_;
+                        this->denominator_ = copyNum.denominator_;
+                        return *this;
                     }
+           
            Number&  operator=(const int num) {
-                    this->numerator_ = num;
-                    this->denominator_ = 1;
-                    return *this;
+                        this->numerator_ = num;
+                        this->denominator_ = 1;
+                        return *this;
                     }
-
 
     friend bool     operator==(const Number firstNum, const Number secondNum);
     friend bool     operator!=(const Number firstNum, const Number secondNum);
@@ -42,10 +42,13 @@ public:
     friend bool     operator<(const Number firstNum, const Number secondNum);
     friend bool     operator<=(const Number firstNum, const Number secondNum);
 
+    friend std::ostream&    operator<<(std::ostream &output, const Number& number); 
+
 private:
     bool            Ok() const;
     bool            checkInputStr(char *numStr);
     void            makeNumberSimple();
+    void            printNumber();
     
     int             numerator_;
     int             denominator_;
