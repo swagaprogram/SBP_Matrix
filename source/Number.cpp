@@ -50,6 +50,13 @@ Number::Number(double number) :
     OK(); 
 }
 
+Number::Number(int number) :
+    numerator_      (number),
+    denominator_    (1)
+{
+    OK();
+}
+
 Number::~Number() {
     numerator_      = -666;
     denominator_    = -666;
@@ -117,10 +124,21 @@ Number operator*(const Number firstNum, const Number secondNum) {
 }
 
 Number operator/(const Number firstNum, const Number secondNum) {
-    int newNumerator = firstNum.numerator_ * secondNum.denominator_;
-    int newDenominator = firstNum.denominator_ * secondNum.numerator_;
-    Number newNumber(newNumerator, newDenominator);
-    return newNumber;
+    try {
+        if(secondNum.numerator_ != 0) {
+            int newNumerator = firstNum.numerator_ * secondNum.denominator_;
+            int newDenominator = firstNum.denominator_ * secondNum.numerator_;
+            Number newNumber(newNumerator, newDenominator);
+            return newNumber;
+        }
+        else {
+            throw 2; 
+        }
+    }
+    catch(int i) {
+        printf("operator/, secondNum = 0, div by zero\n");
+        return firstNum;
+    }
 }
 
 bool operator==(const Number firstNum, const Number secondNum) {
@@ -167,4 +185,14 @@ bool operator<=(const Number firstNum, const Number secondNum) {
     int b = secondNum.numerator_ * (NOK / secondNum.denominator_);
     if (a <= b) return true;
     else return false;
+}
+
+std::ostream& operator<<(std::ostream& output, const Number& number) {
+    if(number.denominator_ == 1) {
+        output << number.numerator_;
+    }
+    else {
+        output << number.numerator_ << "/" << number.denominator_;
+    }
+    return output;
 }
