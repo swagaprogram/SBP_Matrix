@@ -1,6 +1,7 @@
 #pragma once
 #include "Number.h"
 #include <iostream>
+
 template<class T> class Matrix;
 template <typename T>
 
@@ -13,12 +14,12 @@ private:
 
 public:
 	
-	Matrix() {
+							Matrix() {
 		rows_ = 0;
 		columns_ = 0;
 		Array_ = nullptr;
 	}
-	Matrix(unsigned int rows, unsigned int columns) {
+							Matrix(unsigned int rows, unsigned int columns) {
 		rows_ = rows;
 		columns_ = columns;
 
@@ -29,7 +30,7 @@ public:
 				Array_[i][j] = 0;
 		}
 	}
-	Matrix(const Matrix& get) {
+							Matrix(const Matrix& get) {
 		rows_ = get.rows_;
 		columns_ = get.columns_;
 		Array_ = new T*[rows_];
@@ -40,7 +41,7 @@ public:
 			}
 		}
 	}
-	~Matrix() {
+							~Matrix() {
 		for (unsigned int i = 0; i < rows_; ++i) {
 			delete[] Array_[i];
 		}
@@ -59,7 +60,7 @@ public:
 		}
 	}
 
-	Matrix<T> operator+ (const Matrix& mat) const {
+	Matrix<T>				operator+ (const Matrix& mat) const {
 		try {
 			if ((rows_ == mat.rows_) && (columns_ == mat.columns_)) {
 				Matrix getRes(rows_, columns_);
@@ -78,14 +79,14 @@ public:
 		}
 
 	}
-	Matrix<T> operator* (const Matrix& mat) const {
+	Matrix<T>				operator* (const Matrix& mat) const {
 		try {
 			if ((columns_ == mat.rows_)) {
 				Matrix getRes(rows_, mat.columns_);
 				for (unsigned int i = 0; i < rows_; ++i) {
 					for (unsigned int j = 0; j < mat.columns_; ++j)
 						for (unsigned int k = 0; k < columns_; ++k)
-							getRes.Array_[i][j] += Array_[i][k] * mat.Array_[k][j];
+							getRes.Array_[i][j] = getRes.Array_[i][j] + (Array_[i][k] * mat.Array_[k][j]);
 				}
 				return getRes;
 			}
@@ -98,7 +99,14 @@ public:
 			return *this;
 		}
 	}
-	Matrix<T>& operator= (const Matrix& right) {
+	Matrix<T>				operator* (T num) {
+		Matrix getRes(rows_, columns_);
+		for (unsigned int i = 0; i < rows_; ++i)
+			for (unsigned int j = 0; j < columns_; ++j)
+				getRes.Array_[i][j] = Array_[i][j] * num;
+		return getRes;
+	}
+	Matrix<T>&				operator= (const Matrix& right) {
 		if (this == &right) {
 			return *this;
 		}
@@ -116,7 +124,7 @@ public:
 		columns_ = right.rows_;
 		return *this;
 	}
-	bool operator== (const Matrix& right) const {
+	bool					operator== (const Matrix& right) const {
 		if ((rows_ == right.rows_) && (columns_ == right.columns_)) {
 			for (unsigned int i = 0; i < rows_; ++i)
 				for (unsigned int j = 0; j < columns_; ++j) {
