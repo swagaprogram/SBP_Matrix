@@ -59,6 +59,9 @@ public:
 			std::cout << std::endl;
 		}
 	}
+	T						getElement(unsigned int row, unsigned int column) {
+		return Array_[row][column];
+	}
 
 	Matrix<T>				operator+ (const Matrix& mat) const {
 		try {
@@ -124,7 +127,7 @@ public:
 		columns_ = right.rows_;
 		return *this;
 	}
-	bool					operator== (const Matrix& right) const {
+	bool					operator==(const Matrix& right) const {
 		if ((rows_ == right.rows_) && (columns_ == right.columns_)) {
 			for (unsigned int i = 0; i < rows_; ++i)
 				for (unsigned int j = 0; j < columns_; ++j) {
@@ -132,5 +135,13 @@ public:
 				}
 		}
 		else return false;
+	}
+	
+	Matrix<T>				transpose() {
+		Matrix<T> getRes(columns_, rows_);
+		for (unsigned int i = 0; i < rows_; ++i)
+			for (unsigned int j = 0; j < columns_; ++j)
+				getRes.Array_[j][i] = Array_[i][j];
+		return getRes;
 	}
 };
