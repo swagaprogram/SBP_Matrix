@@ -1,4 +1,6 @@
-#pragma once
+#ifndef MATRIX_H_INCLUDED
+#define MATRIX_H_INCLUDED
+
 #include "Number.h"
 #include <iostream>
 
@@ -145,3 +147,5 @@ public:
 		return getRes;
 	}
 };
+
+#endif
