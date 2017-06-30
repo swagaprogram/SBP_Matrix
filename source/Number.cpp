@@ -1,17 +1,18 @@
 #include "./../include/Number.h" 
 
-#define OK();                                           \
-     try {                                              \
-        if(Ok()) {}                                     \
-        else {                                          \
-            throw 1;                                    \
-        }                                               \
-    }                                                   \
-    catch(int i) {                                      \
-        printf("denominator = 0, div by zero\n");       \
-        Number();                                       \
+#define OK();                                                       \
+     try {                                                          \
+        if(Ok()) {}                                                 \
+        else {                                                      \
+            throw ZERO_DENOMINATOR;                                 \
+        }                                                           \
+    }                                                               \
+    catch(NUMBER_ERRORS err) {                                      \
+        if(err == ZERO_DENOMINATOR) {                               \
+            printf("denominator = 0, div by zero\n");               \
+            Number();                                               \
+        }                                                           \
     }
-   
 
 Number::Number() :
     numerator_      (0),
@@ -22,15 +23,11 @@ Number::Number(char *numStr) :
     numerator_      (0),
     denominator_    (1)
 {
-   // if(checkInputStr(numStr) == false) {
-    //    printf("Error with input str");
-   // }
-  //  else { 
-        size_t counter = 0;    
-        Number num = Counting(numStr, &counter);
-        numerator_ = num.numerator_;
-        denominator_ = num.denominator_;
-        makeNumberSimple();
+    size_t counter = 0;    
+    Number num = Counting(numStr, &counter);
+    numerator_ = num.numerator_;
+    denominator_ = num.denominator_;
+    makeNumberSimple();
     OK();
 }
 
@@ -60,16 +57,6 @@ Number::Number(int number) :
 Number::~Number() {
     numerator_      = -666;
     denominator_    = -666;
-}
-
-bool Number::checkInputStr(char *numStr) {
-    for (int i = 0; numStr[i] != '/0'; i++) {
-        if (!(numStr[i] >= 0 && numStr[i] <= 9) 
-            || numStr[i] == '-' || numStr[i] == '.' || numStr[i] == ',') {
-                return false;
-        }
-    }
-    return true;
 }
 
 void Number::printNumber() {
@@ -132,12 +119,14 @@ Number operator/(const Number firstNum, const Number secondNum) {
             return newNumber;
         }
         else {
-            throw 2; 
+            throw DIV_BY_ZERO;
         }
     }
-    catch(int i) {
-        printf("operator/, secondNum = 0, div by zero\n");
-        return firstNum;
+    catch(NUMBER_ERRORS err) {
+        if(err == DIV_BY_ZERO) {                                    
+            printf("operator/, secondNum = 0, div by zero\n");      
+        }
+        return firstNum;                                       
     }
 }
 
