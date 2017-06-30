@@ -23,12 +23,29 @@ Number::Number(char *numStr) :
     numerator_      (0),
     denominator_    (1)
 {
-    size_t counter = 0;    
-    Number num = Counting(numStr, &counter);
+    size_t counter = 0;   
+    int len = strlen(numStr);
+    char* str = (char*)malloc((len + 1) *sizeof(char));
+    int i = 0;
+    for(i = 0; i < len; i++) {
+        str[i] = numStr[i];
+    }
+    str[i] = '\0';
+
+	int j;
+	for (i = j = 0; str[i] != '\0'; i++) {
+		if (str[i] != ' ') {
+			str[j++] = str[i];
+		}
+	}
+	str[j] = '\0';
+
+    Number num = Counting(str, &counter);
     numerator_ = num.numerator_;
     denominator_ = num.denominator_;
     makeNumberSimple();
     OK();
+    free(str);
 }
 
 Number::Number(int numerator, int denominator) : 

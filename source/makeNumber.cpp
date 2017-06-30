@@ -14,6 +14,7 @@ Number Number::Counting(char *str, size_t *counter) {
         } 
     return val;
     }
+    return val;
 }
 
 Number Number::getSubAdd(char *str, size_t *counter) {
