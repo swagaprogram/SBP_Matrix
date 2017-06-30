@@ -4,8 +4,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <cmath>
-#include <assert.h>
 #include <iostream>
+#include <string.h>
 
 enum NUMBER_ERRORS {
     ZERO_DENOMINATOR,
