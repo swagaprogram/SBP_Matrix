@@ -7,6 +7,13 @@
 #include <assert.h>
 #include <iostream>
 
+enum NUMBER_ERRORS {
+    ZERO_DENOMINATOR,
+    DIV_BY_ZERO,
+    UNKNOWN_CHARACTER,
+    NO_CLOSING_BRACKET  
+};
+
 class Number    
 {
 public:
@@ -46,10 +53,9 @@ public:
 
 private:
     bool            Ok() const;
-    bool            checkInputStr(char *numStr);
     void            makeNumberSimple();
     void            printNumber();
-    
+
     int             numerator_;
     int             denominator_;
 
@@ -65,5 +71,5 @@ private:
     
     int             nok(int a, int b);
     int             nod(int a, int b);
-
+  
 #endif
